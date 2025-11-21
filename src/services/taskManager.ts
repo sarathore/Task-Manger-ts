@@ -1,4 +1,4 @@
-import type { Task } from '../interfaces/taskTypes'
+import type { Task } from '../types/taskTypes'
 import { wrapInPromise } from '../utils/wrapInPromise'
 
 export class TaskManager {
@@ -6,7 +6,7 @@ export class TaskManager {
   private nextId = 1;
 
   async addTask(title: string, dueDate?: Date): Promise<Task> {
-    const task: Task = { id: this.nextId++, title, completed: false};
+    const task: Task = { id: this.nextId++, title, completed: false, dueDate};
     this.tasks.push(task);
     return task;
   }
@@ -14,11 +14,10 @@ export class TaskManager {
     return this.tasks
   }
   async updateTask(id: number, updates: Partial<Task>): Promise<Task | null> {
-    const task = this.tasks.find(t => t.id === id );
+    const task = this.tasks.find(t => t.id === id);
     if (!task) return null;
-    this.tasks = this.tasks.map(t => t.id === id ? {...t, ...updates }: t);
-    return {...task, ...updates};
-
+    this.tasks = this.tasks.map(t => t.id === id ? { ...t, ...updates } : t);
+    return { ...task, ...updates };
   }
   async deleteTask(id: number): Promise<boolean> {
     const index = this.tasks.findIndex(t => t.id === id);

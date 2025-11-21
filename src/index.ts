@@ -3,8 +3,8 @@ import { TaskManager } from './services/taskManager'
 const manager = new TaskManager();
 
 async function demo() {
-  const task1 = await manager.addTask("Learn Typescript");
-  const task2 = await manager.addTask("Build a Project", new Date());
+  const task1 = await manager.addTask("Learn Typescript", new Date());
+  const task2 = await manager.addTask("Build a Project");
 
   console.log(await manager.getTask());
 
